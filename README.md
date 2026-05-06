@@ -1,6 +1,6 @@
 # AI Banner - Tech & AI News Blog
 
-![App Preview](https://imgix.cosmicjs.com/https://imgix.cosmicjs.com/8b55d880-a045-11ed-81f2-f50e185dd248-T7K4aEPoGGk.jpg?w=1200&h=630&fit=crop&auto=format,compress)
+![App Preview](https://imgix.cosmicjs.com/8b55d880-a045-11ed-81f2-f50e185dd248-T7K4aEPoGGk.jpg?w=1200&h=630&fit=crop&auto=format,compress)
 
 A modern, responsive AI and tech news blog built with Next.js 16 and [Cosmic](https://www.cosmicjs.com).
 

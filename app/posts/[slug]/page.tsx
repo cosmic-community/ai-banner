@@ -3,6 +3,7 @@ import { getPost, getPosts } from '@/lib/cosmic'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getMetafieldValue } from '@/lib/cosmic'
+import NewsletterSignup from '@/components/NewsletterSignup'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -128,6 +129,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             </div>
           </div>
         )}
+
+        {/* Newsletter Signup — saves subscriber to Cosmic + fires Insights conversion */}
+        <NewsletterSignup postId={post.id} postSlug={post.slug} />
 
         {/* Fire a custom Insights event with author + category attribution */}
         {(author || category) && (

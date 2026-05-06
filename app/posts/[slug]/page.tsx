@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getMetafieldValue } from '@/lib/cosmic'
 import NewsletterSignup from '@/components/NewsletterSignup'
+import PostEngagement from '@/components/PostEngagement'
+import ShareButtons from '@/components/ShareButtons'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -57,6 +59,14 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      {/* PostEngagement: scroll depth, time on page, clicks, shares */}
+      <PostEngagement
+        postId={post.id}
+        postSlug={post.slug}
+        authorId={author?.id}
+        categoryId={category?.id}
       />
 
       <article className="max-w-4xl mx-auto px-4 py-12">
@@ -130,26 +140,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
           </div>
         )}
 
+        {/* Social Share Buttons */}
+        <ShareButtons title={getMetafieldValue(post.metadata?.title) || post.title} slug={post.slug} />
+
         {/* Newsletter Signup — saves subscriber to Cosmic + fires Insights conversion */}
         <NewsletterSignup postId={post.id} postSlug={post.slug} />
-
-        {/* Fire a custom Insights event with author + category attribution */}
-        {(author || category) && (
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                if (typeof window !== 'undefined' && typeof window.cosmicInsights === 'function') {
-                  window.cosmicInsights('post_viewed', {
-                    object_id: '${post.id}',
-                    object_type: 'posts',
-                    ${author ? `author_id: '${author.id}',` : ''}
-                    ${category ? `category_id: '${category.id}',` : ''}
-                  });
-                }
-              `,
-            }}
-          />
-        )}
       </article>
     </>
   )

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
   try {
-    const { email, firstName, postId, postSlug } = await req.json()
+    const { email, firstName, postId } = await req.json()
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json({ error: 'A valid email is required.' }, { status: 400 })
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       metadata: {
         email,
         first_name: firstName || '',
-        source_post: postSlug || '',
+        source_post: postId || '',
         subscribed_at: new Date().toISOString().split('T')[0],
       },
     })
